@@ -10,12 +10,10 @@ function persoonsNaam(voornaam, achternaam)
 { 
     var intro = "Je naam is ";
 
-    function maakVolledigeNaam()
+    return function()
     { 
-        return intro + voornaam + " " + achternaam; 
+        return console.log(intro + voornaam + " " + achternaam); 
     }
-
-    return maakVolledigeNaam(); 
 } 
 
 persoonsNaam("Roy", "Peters");
