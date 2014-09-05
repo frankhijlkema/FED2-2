@@ -5,7 +5,7 @@ Ook heeft een closure toegang tot de parameters van de buitenste functie.
 
 
 // Voorbeeld
-
+```
 function persoonsNaam(voornaam, achternaam)
 { 
     var intro = "Je naam is ";
