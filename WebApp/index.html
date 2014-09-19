@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Web App V1, basic JavaScript Skeleton">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Favorite Movies</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <!--<link rel="author" href="humans.txt">-->
+</head>
+<body>
+<main id="content">
+
+    <section data-route="about" id="about">
+        <h1 data-name="title"></h1>
+        <p data-name="description"></p>
+    </section>
+
+    <section data-route="movies" id="movies">
+        <h1>Favorite movies</h1>
+
+        <div id="movieCollection">
+            <article>
+                <header>
+                    <h1 data-name="title"></h1>
+                    <em>Release date: <time data-name="releaseDate"></time></em>
+                </header>
+
+                <figure>
+                    <img src="" alt="" data-name="cover">
+                </figure>
+
+                <p data-name="description"></p>
+            </article>
+        </div>
+
+    </section>
+
+</main>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#movies">Movies</a></li>
+        </ul>
+    </nav>
+</header>
+
+<script src="static/js/vendor/routie.js"></script>
+<script src="static/js/vendor/transparency.min.js"></script>
+<script src="static/js/app.js"></script>
+</body>
+</html>

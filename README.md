@@ -7,3 +7,8 @@ FED2
 - Namespace your javascript file(s)
 - One overall controller for init your application
 - Constructor prototype
+- Transparency: load dynamic content from api in html
+- Routie: make routes possible
+- JavaScript Module Pattern: create (closure) public and private methods
+- Less: write easily css
+- Create different js files for different modules (clean your code)

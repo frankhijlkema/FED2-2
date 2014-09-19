@@ -1,0 +1,34 @@
+body {
+    margin-top: 70px;
+}
+nav {
+    position: absolute;
+    top: 0;
+}
+nav ul {
+    padding: 0;
+    margin: 0;
+}
+nav ul li {
+    float: left;
+    padding: 15px;
+    background-color: lightgray;
+    list-style-type: none;
+
+    margin: 10px 0;
+}
+nav ul li:nth-child(n+2) {
+    margin-left: 20px;
+}
+
+main > section {
+    display: none;
+}
+
+section.active {
+    display: block;
+}
+
+[data-name="cover"] {
+    width: 100px;
+}
