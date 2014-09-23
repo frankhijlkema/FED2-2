@@ -60,7 +60,8 @@ App.sections = (function()
     {
         var allSections = document.getElementsByTagName('section');
 
-        for(var i = 0; i < allSections.length; i++) {
+        for(var i = 0; i < allSections.length; i++)
+        {
             allSections[i].classList.remove('active');
         }
     }
@@ -93,7 +94,8 @@ App.router = (function()
     return {
         init: function()
         {
-            routie({
+            routie(
+            {
                 'movies': function()
                 {
                     console.log('Open movies page');
