@@ -1,6 +1,9 @@
 body {
     margin-top: 70px;
 }
+.clear {
+    clear: both;
+}
 nav {
     position: absolute;
     top: 0;
@@ -29,6 +32,25 @@ section.active {
     display: block;
 }
 
+#genreCollection {
+    display: inline-block;
+}
+
 [data-name="cover"] {
     width: 100px;
+}
+
+#actors figure {
+    float: left;
+    margin: .2em 1em;
+}
+
+#actors article h1 {
+    font-size: 110%;
+    margin: 0;
+}
+
+#actors article h2 {
+    font-size: 100%;
+    display: inline-block;
 }

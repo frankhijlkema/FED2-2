@@ -18,21 +18,65 @@
     <section data-route="movies" id="movies">
         <h1>Favorite movies</h1>
 
+        <div id="genres">
+            <a href="#movies">All</a>
+            <div id="genreCollection">
+                <a href="#movies/genre/" data-name="genre"></a>
+            </div>
+        </div>
+
         <div id="movieCollection">
             <article>
+                <div class="pure-g">
                 <header>
-                    <h1 data-name="title"></h1>
-                    <em>Release date: <time data-name="releaseDate"></time></em>
+                    <a href="#movie/" data-name="movie_url">
+                        <h1 data-name="title"></h1>
+                    </a>
+                    <em>Release date: <time data-name="release_date"></time></em>
                 </header>
 
                 <figure>
                     <img src="" alt="" data-name="cover">
                 </figure>
 
-                <p data-name="description"></p>
+                <p data-name="simple_plot"></p>
+                </div>
             </article>
         </div>
 
+    </section>
+
+    <section data-route="movie" id="movie">
+        <article>
+            <header>
+                <h1 data-name="title"></h1>
+                <em>Release date: <time data-name="release_date"></time></em>
+            </header>
+
+            <figure>
+                <img src="" alt="" data-name="cover">
+            </figure>
+
+            <p data-name="plot"></p>
+
+
+            <section id="actors">
+                <h1>Actors</h1>
+                <div data-name="actors">
+                    <article>
+                        <figure>
+                            <img src="" alt="" data-name="url_photo">
+                        </figure>
+                        <header>
+                            <a href="" data-name="url_character"><h1 data-name="character"></h1></a>
+                            Actor name: <a href="" data-name="url_profile"><h2 data-name="actor_name"></h2></a>
+                        </header>
+                    </article>
+                    <div class="clear"></div>
+                </div>
+            </section>
+
+        </article>
     </section>
 
 </main>
@@ -40,12 +84,13 @@
 <header>
     <nav>
         <ul>
-            <li><a href="#about">About</a></li>
             <li><a href="#movies">Movies</a></li>
+            <li><a href="#about">About</a></li>
         </ul>
     </nav>
 </header>
 
+<script src="static/js/vendor/underscore-min.js"></script>
 <script src="static/js/vendor/routie.js"></script>
 <script src="static/js/vendor/transparency.min.js"></script>
 <script src="static/js/app.js"></script>
