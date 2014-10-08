@@ -157,7 +157,7 @@ moviesApp.sections = (function()
         return genres;
     }
 
-    function manipulateMovieData(response)
+    function manipulateMovieDataAndPutInLocalStorage(response)
     {
         var movieData = _.map(JSON.parse(response), function(movie, i)
         {
@@ -176,7 +176,9 @@ moviesApp.sections = (function()
             return movie.releaseDate;
         });
 
-        return JSON.stringify(movieData.reverse());
+        localStorage.setItem('movies', JSON.stringify(movieData.reverse()));
+
+        return true;
     }
 
     return {
@@ -200,9 +202,7 @@ moviesApp.sections = (function()
                 {
                     console.log('Haal movies api binnen en zet in localStorage');
 
-                    response = manipulateMovieData(response);
-
-                    localStorage.setItem('movies', response);
+                    manipulateMovieDataAndPutInLocalStorage(response);
 
                     // Call this function again (because the API has been request and saved into localStorage)
                     moviesApp.sections.movies();
@@ -235,10 +235,9 @@ moviesApp.sections = (function()
                 {
                     console.log('Haal movies api binnen en zet in localStorage');
 
-                    response = manipulateMovieData(response);
+                    manipulateMovieDataAndPutInLocalStorage(response);
 
-                    localStorage.setItem('movies', response);
-
+                    // Call this function again (because the API has been request and saved into localStorage)
                     moviesApp.sections.movie(title);
                 });
             }
