@@ -3,96 +3,123 @@
 <head>
     <meta charset="utf-8">
     <meta name="description" content="Web App V1, basic JavaScript Skeleton">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
     <title>My Favorite Movies</title>
+    <link rel="stylesheet" href="static/css/vendor/animate.css">
     <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
-<main id="content">
+<div class="wrapper">
+    <main id="content">
+        <section data-route="about" id="about">
+            <h1 data-name="title"></h1>
+            <p data-name="description"></p>
+        </section>
 
-    <section data-route="about" id="about">
-        <h1 data-name="title"></h1>
-        <p data-name="description"></p>
-    </section>
+        <section data-route="movies" id="movies">
+            <h1>Favorite movies</h1>
 
-    <section data-route="movies" id="movies">
-        <h1>Favorite movies</h1>
+            <div id="movieCollection">
+                <article>
+                    <figure>
+                        <img src="" alt="" data-name="cover">
+                    </figure>
+
+                    <div class="content">
+                        <header>
+                            <a href="#movie/" data-name="movie_url">
+                                <h1 data-name="title"></h1>
+                            </a>
+                            <em>Release date: <time data-name="release_date"></time></em>
+                            <p>
+                                <em data-name="reviews">Review rating: </em>
+                            </p>
+                        </header>
+
+                        <p data-name="simple_plot"></p>
+                    </div>
+                </article>
+            </div>
+
+        </section>
+
+        <section data-route="movie" id="movie">
+
+            <div id="goBack"></div>
+
+            <article>
+                <div class="info">
+                    <figure>
+                        <img src="" alt="" data-name="cover" id="movieAfb">
+                    </figure>
+
+                    <div class="content">
+                        <header>
+                            <a href="#movie/" data-name="movie_url">
+                                <h1 data-name="title"></h1>
+                            </a>
+                            <em>Release date: <time data-name="release_date"></time></em>
+                        </header>
+                    </div>
+                </div>
+
+                <h2>Description</h2>
+                <p data-name="plot"></p>
+
+
+                <section id="actors">
+                    <h1>Actors</h1>
+                    <div data-name="actors">
+                        <article>
+                            <figure>
+                                <img src="" alt="" data-name="url_photo">
+                            </figure>
+                            <header>
+                                <a href="" data-name="url_character"><h1 data-name="character"></h1></a>
+                                Actor name: <a href="" data-name="url_profile"><h2 data-name="actor_name"></h2></a>
+                            </header>
+                        </article>
+                        <div class="clear"></div>
+                    </div>
+                </section>
+            </article>
+
+        </section>
+
+    </main>
+
+    <header>
+        <div class="header">
+            <a href="#" class="icon" id="menuIcon"></a>
+            <span>My Favorite Movies</span>
+            <a href="#" class="icon" id="filterIcon"></a>
+        </div>
 
         <div id="genres">
-            <a href="#movies">All</a>
             <div id="genreCollection">
-                <a href="#movies/genre/" data-name="genre"></a>
+                <li>
+                    <a href="#movies/genre/" data-name="genre"></a>
+                </li>
             </div>
         </div>
 
-        <div id="movieCollection">
-            <article>
-                <div class="pure-g">
-                <header>
-                    <a href="#movie/" data-name="movie_url">
-                        <h1 data-name="title"></h1>
-                    </a>
-                    <em>Release date: <time data-name="release_date"></time></em>
-                </header>
-
-                <figure>
-                    <img src="" alt="" data-name="cover">
-                </figure>
-
-                <p data-name="simple_plot"></p>
-                </div>
-            </article>
-        </div>
-
-    </section>
-
-    <section data-route="movie" id="movie">
-        <article>
-            <header>
-                <h1 data-name="title"></h1>
-                <em>Release date: <time data-name="release_date"></time></em>
-            </header>
-
-            <figure>
-                <img src="" alt="" data-name="cover">
-            </figure>
-
-            <p data-name="plot"></p>
-
-
-            <section id="actors">
-                <h1>Actors</h1>
-                <div data-name="actors">
-                    <article>
-                        <figure>
-                            <img src="" alt="" data-name="url_photo">
-                        </figure>
-                        <header>
-                            <a href="" data-name="url_character"><h1 data-name="character"></h1></a>
-                            Actor name: <a href="" data-name="url_profile"><h2 data-name="actor_name"></h2></a>
-                        </header>
-                    </article>
-                    <div class="clear"></div>
-                </div>
-            </section>
-
-        </article>
-    </section>
-
-</main>
-
-<header>
-    <nav>
-        <ul>
-            <li><a href="#movies">Movies</a></li>
-            <li><a href="#about">About</a></li>
-        </ul>
-    </nav>
-</header>
+        <nav id="menu">
+            <div id="menuUl">
+                <ul>
+                    <li>Menu</li>
+                    <li><a href="#movies">Movies</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+</div>
 
 <script src="static/js/vendor/underscore-min.js"></script>
 <script src="static/js/vendor/routie.js"></script>
 <script src="static/js/vendor/transparency.min.js"></script>
+<script src="static/js/vendor/hammer.min.js"></script>
+<script src="static/js/vendor/wow.min.js"></script>
 <script src="static/js/app.js"></script>
 </body>
 </html>

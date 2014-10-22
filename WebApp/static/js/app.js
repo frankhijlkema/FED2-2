@@ -16,6 +16,7 @@ moviesApp.config = (function()
             };
         },
         movieApiUrl: 'http://dennistel.nl/movies',
+        movieReloadTime: 3,
         genreDirective:
         {
             genre:
@@ -45,6 +46,13 @@ moviesApp.config = (function()
                 src: function(params)
                 {
                     return this.cover;
+                }
+            },
+            reviews:
+            {
+                text: function(params)
+                {
+                    return params.value + this.reviews;
                 }
             },
             actors:
@@ -131,7 +139,7 @@ moviesApp.content = (function ()
 
 moviesApp.sections = (function()
 {
-    function removeClassActiveFromSections()
+    function removeClassActiveFromAllSections()
     {
         var allSections = document.getElementsByTagName('section');
 
@@ -139,22 +147,6 @@ moviesApp.sections = (function()
         {
             allSections[i].classList.remove('active');
         }
-    }
-
-    function getGenres(movieData)
-    {
-        var genres = _.union(_.flatten(_.pluck(movieData, 'genres')));
-
-        genres = _.map(genres, function(genre, i)
-        {
-            genre = {
-                genre: genre
-            }
-
-            return genre;
-        });
-
-        return genres;
     }
 
     function manipulateMovieDataAndPutInLocalStorage(response)
@@ -177,8 +169,45 @@ moviesApp.sections = (function()
         });
 
         localStorage.setItem('movies', JSON.stringify(movieData.reverse()));
+        localStorage.setItem('lastUpdated', new Date());
+    }
 
-        return true;
+    function getGenresFromMovieData(movieData)
+    {
+        var genres = _.union(_.flatten(_.pluck(movieData, 'genres')));
+
+        genres = _.map(genres, function(genre, i)
+        {
+            genre =
+            {
+                genre: genre
+            };
+
+            return genre;
+        });
+
+        genres.unshift({ genre: 'All' });
+
+        return genres;
+    }
+
+    function movieDataIsNotOld()
+    {
+        var lastUpdated = new Date(localStorage.getItem('lastUpdated'))
+        lastUpdated.setMinutes(lastUpdated.getMinutes() + moviesApp.config.movieReloadTime);
+
+        if(new Date() > lastUpdated)
+        {
+            console.log('Oude data, haal nieuwe binnen');
+
+            return false;
+        }
+        else
+        {
+            console.log('Prima data, haal geen nieuwe binnen');
+
+            return true;
+        }
     }
 
     return {
@@ -192,7 +221,7 @@ moviesApp.sections = (function()
         },
         movies: function(genre)
         {
-            if(localStorage.getItem('movies'))
+            if(localStorage.getItem('movies') && movieDataIsNotOld())
             {
                 console.log('Haal movies uit de localStorage');
             }
@@ -210,9 +239,9 @@ moviesApp.sections = (function()
             }
 
             var movieData = JSON.parse(localStorage.getItem('movies'));
-            var genres = getGenres(movieData);
+            var genres = getGenresFromMovieData(movieData);
 
-            if(genre != undefined)
+            if(genre != undefined && genre != 'All')
             {
                 movieData = _.filter(movieData, function(movie)
                 {
@@ -220,18 +249,20 @@ moviesApp.sections = (function()
                 });
             }
 
+            //movieDataIsNotOld();
+
             Transparency.render(document.getElementById('genreCollection'), genres, moviesApp.config.genreDirective);
             Transparency.render(document.getElementById('movieCollection'), movieData, moviesApp.config.movieDirective);
         },
         movie: function(title)
         {
-            if(localStorage.getItem('movies'))
+            if(localStorage.getItem('movies') && movieDataIsNotOld())
             {
                 console.log('Haal movie met TITLE ' + title + ' binnen uit localStorage');
             }
             else
             {
-                moviesApp.utils.xhrTrigger('GET', moviesApp.config.movieApiUrl, function (response)
+                moviesApp.utils.xhrTrigger('GET', moviesApp.config.movieApiUrl, function(response)
                 {
                     console.log('Haal movies api binnen en zet in localStorage');
 
@@ -251,7 +282,7 @@ moviesApp.sections = (function()
         },
         toggle: function(section)
         {
-            removeClassActiveFromSections();
+            removeClassActiveFromAllSections();
 
             document.querySelector('#' + section).classList.add('active');
         }
@@ -304,6 +335,69 @@ moviesApp.router = (function()
     }
 })();
 
+moviesApp.ui = (function()
+{
+    return {
+        init: function()
+        {
+            new WOW().init();
+
+            this.menuIcon();
+            this.filterIcon();
+            this.closeMenu();
+            this.goBack();
+        },
+        menuIcon: function ()
+        {
+            var menuIcon = document.getElementById('menuIcon');
+            var mi = new Hammer(menuIcon, { prevent_defaults: true });
+            mi.on("tap pan press", function(e)
+            {
+                e.preventDefault();
+                console.log('Menu open/close');
+
+                document.querySelector('#menu').classList.toggle('menu_open');
+                document.querySelector('#content').classList.toggle('menu_open');
+            });
+        },
+        filterIcon: function()
+        {
+            var filterIcon = document.getElementById('filterIcon');
+            var fi = new Hammer(filterIcon, { prevent_defaults: true });
+            fi.on("tap pan press", function(e)
+            {
+                e.preventDefault();
+                console.log('Filters open/close');
+
+                document.querySelector('#genres').classList.toggle('show');
+            });
+        },
+        closeMenu: function()
+        {
+            var menuItem = document.getElementById('menu');
+            menuItem.addEventListener('click', function(e)
+            {
+                if(e.target && (e.target.nodeName === 'A' || e.target.nodeName === 'NAV'))
+                {
+                    document.querySelector('#menu').classList.toggle('menu_open');
+                    document.querySelector('#content').classList.toggle('menu_open');
+                }
+            });
+        },
+        goBack: function()
+        {
+            var goBack = document.getElementById('goBack');
+            var gb = new Hammer(goBack);
+            gb.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+            gb.on("panright", function(e)
+            {
+                console.log('go back');
+                history.go(-1);
+            });
+        }
+    }
+})();
+
 moviesApp.controller = (function()
 {
     return {
@@ -314,6 +408,8 @@ moviesApp.controller = (function()
             moviesApp.router.init();
 
             moviesApp.sections.init();
+
+            moviesApp.ui.init();
         }
     }
 })();
